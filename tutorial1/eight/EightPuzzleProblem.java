@@ -59,11 +59,11 @@ public class EightPuzzleProblem {
 		//heuristic = new ZeroHeuristic<EightPuzzleState>();
 		
 		AbstractSearchAlgorithm<EightPuzzleState> algo;
-		//algo = new IterativeDeepeningSearch<EightPuzzleState>(initialState, goalTest, sf);
+		algo = new IterativeDeepeningSearch<EightPuzzleState>(initialState, goalTest, sf);
 		//algo = new BreadthFirstSearch<EightPuzzleState>(initialState, goalTest, sf);
 		//algo = new DepthFirstSearch<EightPuzzleState>(initialState, goalTest, sf);
 		//algo = new DepthLimitedSearch<EightPuzzleState>(26, initialState, goalTest, sf);
-		algo = new AStarSearch<EightPuzzleState>(initialState, goalTest, sf, heuristic);
+		//algo = new AStarSearch<EightPuzzleState>(initialState, goalTest, sf, heuristic);
 		
 		algo.verboseSearch();
 	}

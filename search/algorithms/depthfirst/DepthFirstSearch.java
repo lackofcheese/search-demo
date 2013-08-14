@@ -1,7 +1,9 @@
 package search.algorithms.depthfirst;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 
 import search.algorithms.QueueSearch;
@@ -15,6 +17,8 @@ import search.states.State;
  * In order to remember the path taken to the current state, expanded states are put
  * back on the stack under their successors, with a boolean flag so that they
  * are known to have been expanded.
+ * 
+ * This search avoids cycles, but 
  * 
  * @author lackofcheese
  * @param <S> the type of state used.
@@ -33,13 +37,17 @@ public class DepthFirstSearch<S extends State> extends QueueSearch<S, Boolean> {
 	
 	/** A stack to store the path taken to reach the current state. */
 	protected Stack<S> pathStack; 
+	/** The set of nodes in the current path. */
+	protected Set<S> pathSet;
 	/** The stack of states to be processed. */
 	protected Stack<QueueEntry> queue;
+	
 	
 	@Override
 	protected void initSearch() {
 		queue = new Stack<QueueEntry>();
 		pathStack = new Stack<S>();
+		pathSet = new HashSet<S>();
 		this.enqueue(new QueueEntry(getRoot(), null, 0, 0.0, 0.0, false));
 	}
 	@Override
@@ -59,7 +67,8 @@ public class DepthFirstSearch<S extends State> extends QueueSearch<S, Boolean> {
 		/* If the current entry was already expanded, we are backtracking;
 		 * this means it cannot be the goal, and is no longer on the path. */
 		if (currentEntry.getData()) {
-			pathStack.pop();
+			S state = pathStack.pop();
+			pathSet.remove(state);
 			return false;
 		}
 		
@@ -67,6 +76,7 @@ public class DepthFirstSearch<S extends State> extends QueueSearch<S, Boolean> {
 		// If this is the goal state, we add it to the path and conclude.
 		if (getGoalTest().isGoal(currentState)) {
 			pathStack.push(currentState);
+			pathSet.add(currentState);
 			return true;
 		}
 		
@@ -77,11 +87,15 @@ public class DepthFirstSearch<S extends State> extends QueueSearch<S, Boolean> {
 		this.enqueue(new QueueEntry(currentState, currentEntry.getPred(), currentDepth,
 				currentCost, 0.0, true));
 		pathStack.push(currentState);
+		pathSet.add(currentState);
 		
 		// Retrieve and process the successors.
 		Map<S, Double> succMap = getSF().getSuccessors(currentState);
 		for (Map.Entry<S, Double> entry : succMap.entrySet()) {
 			S s2 = entry.getKey();
+			if (pathSet.contains(s2)) {
+				continue;
+			}
 			// Enqueue the successors.
 			this.enqueue(new QueueEntry(s2,	currentState, currentDepth + 1, 
 					currentCost + entry.getValue(),	0.0, false));
