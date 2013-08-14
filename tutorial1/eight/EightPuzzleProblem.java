@@ -16,6 +16,7 @@ import search.algorithms.depthfirst.*;
  * An implementation of the 8-puzzle problem from Tutorial 1.
  * @author lackofcheese
  */
+@SuppressWarnings("unused")
 public class EightPuzzleProblem {
 	/** The default file to read input from. */
 	public static final String DEFAULT_INPUT = "src/eight.in";

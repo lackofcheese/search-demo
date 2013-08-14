@@ -55,6 +55,7 @@ public class NavigationProblem {
 			sf.addSuccessor(b0, b1, cost);
 			sf.addSuccessor(b1, b0, cost);
 		}
+		input.close();
 	}
 	
 	/**
