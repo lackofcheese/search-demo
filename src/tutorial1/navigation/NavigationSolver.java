@@ -19,7 +19,7 @@ import search.algorithms.depthfirst.*;
  * @author lackofcheese
  */
 @SuppressWarnings("unused")
-public class NavigationProblem {
+public class NavigationSolver {
 	/** The default file to read input from. */
 	public static final String DEFAULT_INPUT = "src/navigation.in";
 	

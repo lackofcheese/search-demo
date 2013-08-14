@@ -46,15 +46,17 @@ public class EightPuzzleState implements State {
 	}
 	
 	/**
-	 * Returns a string representation, which is simply
-	 * all nine tile numbers in order with spaces between them.
+	 * Returns a string representation, which uses newlines and
+	 * spaces to display the 2D configuration.
 	 * @return a string representation of the state.
 	 */
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
+		builder.append("\n");
 		for (int i = 0; i < 3; i++) {
+			builder.append("\n");
 			for (int j = 0; j < 3; j++) {
-				if (i > 0 || j > 0) {
+				if (j > 0) {
 					builder.append(" ");
 				}
 				builder.append(grid[i][j]);
