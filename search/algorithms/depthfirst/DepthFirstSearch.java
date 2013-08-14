@@ -18,7 +18,8 @@ import search.states.State;
  * back on the stack under their successors, with a boolean flag so that they
  * are known to have been expanded.
  * 
- * This search avoids cycles, but 
+ * This search avoids cycles, but can still search the same state multiple times if
+ * it reaches that state via different paths.
  * 
  * @author lackofcheese
  * @param <S> the type of state used.
