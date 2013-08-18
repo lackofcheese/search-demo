@@ -14,21 +14,26 @@ import search.algorithms.depthfirst.*;
 
 /**
  * An implementation of the 8-puzzle problem from Tutorial 1.
+ * 
  * @author lackofcheese
  */
 @SuppressWarnings("unused")
 public class EightPuzzleSolver {
 	/** The default file to read input from. */
 	public static final String DEFAULT_INPUT = "src/eight.in";
-	
+
 	/** The initial state for the search. */
 	private static EightPuzzleState initialState;
 	/** The goal state for the search */
 	private static EightPuzzleState goalState;
+
 	/**
 	 * Reads the search parameters from the given file name.
-	 * @param inputFileName the file to read.
-	 * @throws IOException if there are issues reading the file.
+	 * 
+	 * @param inputFileName
+	 *            the file to read.
+	 * @throws IOException
+	 *             if there are issues reading the file.
 	 */
 	private static void readFile(String inputFileName) throws IOException {
 		BufferedReader input = new BufferedReader(new FileReader(inputFileName));
@@ -36,10 +41,11 @@ public class EightPuzzleSolver {
 		goalState = new EightPuzzleState(input.readLine());
 		input.close();
 	}
-	
+
 	/**
-	 * @param args the command-line arguments. If any are given, the first
-	 * will be taken as the file to read from.
+	 * @param args
+	 *            the command-line arguments. If any are given, the first will
+	 *            be taken as the file to read from.
 	 */
 	public static void main(String args[]) {
 		try {
@@ -52,20 +58,26 @@ public class EightPuzzleSolver {
 			e.printStackTrace();
 			return;
 		}
-		
-		GoalTest<EightPuzzleState> goalTest = new EqualGoalTest<EightPuzzleState>(goalState);
+
+		GoalTest<EightPuzzleState> goalTest = new EqualGoalTest<EightPuzzleState>(
+				goalState);
 		SuccessorFunction<EightPuzzleState> sf = new EightPuzzleSF();
 		Heuristic<EightPuzzleState> heuristic;
 		heuristic = new TotalManhattanDistance(goalState);
-		//heuristic = new ZeroHeuristic<EightPuzzleState>();
-		
+		// heuristic = new ZeroHeuristic<EightPuzzleState>();
+
 		AbstractSearchAlgorithm<EightPuzzleState> algo;
-		algo = new IterativeDeepeningSearch<EightPuzzleState>(initialState, goalTest, sf);
-		//algo = new BreadthFirstSearch<EightPuzzleState>(initialState, goalTest, sf);
-		//algo = new DepthFirstSearch<EightPuzzleState>(initialState, goalTest, sf);
-		//algo = new DepthLimitedSearch<EightPuzzleState>(26, initialState, goalTest, sf);
-		//algo = new AStarSearch<EightPuzzleState>(initialState, goalTest, sf, heuristic);
-		
+		algo = new IterativeDeepeningSearch<EightPuzzleState>(initialState,
+				goalTest, sf);
+		// algo = new BreadthFirstSearch<EightPuzzleState>(initialState,
+		// goalTest, sf);
+		// algo = new DepthFirstSearch<EightPuzzleState>(initialState, goalTest,
+		// sf);
+		// algo = new DepthLimitedSearch<EightPuzzleState>(26, initialState,
+		// goalTest, sf);
+		// algo = new AStarSearch<EightPuzzleState>(initialState, goalTest, sf,
+		// heuristic);
+
 		algo.verboseSearch();
 	}
 }

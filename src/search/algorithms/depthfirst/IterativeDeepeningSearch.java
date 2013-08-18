@@ -11,15 +11,22 @@ import search.states.State;
 /**
  * An Iterative Deepening Search, implemented by successive depth-limited
  * searches with increasing depth.
+ * 
  * @author lackofcheese
- * @param <S> the type of state used.
+ * @param <S>
+ *            the type of state used.
  */
-public class IterativeDeepeningSearch<S extends State> extends AbstractSearchAlgorithm<S> {
-	/** 
+public class IterativeDeepeningSearch<S extends State> extends
+		AbstractSearchAlgorithm<S> {
+	/**
 	 * Constructs an IDS with the given parameters.
-	 * @param root the initial state.
-	 * @param goalTest a test for the goal state.
-	 * @param sf the successor function.
+	 * 
+	 * @param root
+	 *            the initial state.
+	 * @param goalTest
+	 *            a test for the goal state.
+	 * @param sf
+	 *            the successor function.
 	 */
 	public IterativeDeepeningSearch(S root, GoalTest<S> goalTest,
 			SuccessorFunction<S> sf) {
@@ -36,14 +43,15 @@ public class IterativeDeepeningSearch<S extends State> extends AbstractSearchAlg
 	private double goalCost;
 	/** The path taken to reach the goal state (if found). */
 	private List<S> goalPath;
-	
+
 	@Override
 	public void search() {
 		this.goalFound = false;
-		
-		for (int maxDepth = 0; ; maxDepth++) {
+
+		for (int maxDepth = 0;; maxDepth++) {
 			System.out.println("Depth: " + maxDepth);
-			DepthLimitedSearch<S> dls = new DepthLimitedSearch<S>(maxDepth, getRoot(), getGoalTest(), getSF());
+			DepthLimitedSearch<S> dls = new DepthLimitedSearch<S>(maxDepth,
+					getRoot(), getGoalTest(), getSF());
 			dls.search();
 			if (dls.goalFound()) {
 				this.goalFound = true;

@@ -14,27 +14,32 @@ import search.heuristics.*;
 import search.algorithms.*;
 import search.algorithms.norevisits.*;
 import search.algorithms.depthfirst.*;
+
 /**
  * An implementation of the navigation problem from Tutorial 1.
+ * 
  * @author lackofcheese
  */
 @SuppressWarnings("unused")
 public class NavigationSolver {
 	/** The default file to read input from. */
 	public static final String DEFAULT_INPUT = "src/navigation.in";
-	
+
 	/** A mapping to store the navigation data. */
-	private static MapSF<NamedState> sf =  new MapSF<NamedState>();
+	private static MapSF<NamedState> sf = new MapSF<NamedState>();
 	/** A mapping to remember the states by their names. */
 	private static Map<String, NamedState> byName = new HashMap<String, NamedState>();
-	
+
 	/**
 	 * Reads the search parameters from the given file.
-	 * @param inputFileName the file to read.
-	 * @throws IOException if there are issues reading the file.
+	 * 
+	 * @param inputFileName
+	 *            the file to read.
+	 * @throws IOException
+	 *             if there are issues reading the file.
 	 */
 	private static void readFile(String inputFileName) throws IOException {
-		BufferedReader input = new BufferedReader(new FileReader(inputFileName)); 
+		BufferedReader input = new BufferedReader(new FileReader(inputFileName));
 		// Read the number of vertices from the file.
 		int numVertices = Integer.valueOf(input.readLine().trim());
 		// Read all of the buildings in and remember them by name.
@@ -45,8 +50,10 @@ public class NavigationSolver {
 		}
 		// Read the number of edges.
 		int numEdges = Integer.valueOf(input.readLine().trim());
-		/*  Read the edges, and store all of them in the mapping
-		 *  successor function. */
+		/*
+		 * Read the edges, and store all of them in the mapping successor
+		 * function.
+		 */
 		for (int i = 0; i < numEdges; i++) {
 			String[] names = input.readLine().trim().split("\\s+");
 			NamedState b0 = byName.get(names[0]);
@@ -57,10 +64,11 @@ public class NavigationSolver {
 		}
 		input.close();
 	}
-	
+
 	/**
-	 * @param args the command-line arguments. If any are given, the first
-	 * will be taken as the file to read from.
+	 * @param args
+	 *            the command-line arguments. If any are given, the first will
+	 *            be taken as the file to read from.
 	 */
 	public static void main(String args[]) {
 		try {
@@ -73,18 +81,22 @@ public class NavigationSolver {
 			e.printStackTrace();
 			return;
 		}
-		
+
 		NamedState initialState = byName.get("78");
-		GoalTest<NamedState> goalTest = new EqualGoalTest<NamedState>(byName.get("82D"));
+		GoalTest<NamedState> goalTest = new EqualGoalTest<NamedState>(
+				byName.get("82D"));
 		Heuristic<NamedState> heuristic = new ZeroHeuristic<NamedState>();
-		
+
 		AbstractSearchAlgorithm<NamedState> algo;
-		//algo = new IterativeDeepeningSearch<NamedState>(initialState, goalTest, sf);
-		//algo = new BreadthFirstSearch<NamedState>(initialState, goalTest, sf);
-		//algo = new DepthFirstSearch<NamedState>(initialState, goalTest, sf);
+		// algo = new IterativeDeepeningSearch<NamedState>(initialState,
+		// goalTest, sf);
+		// algo = new BreadthFirstSearch<NamedState>(initialState, goalTest,
+		// sf);
+		// algo = new DepthFirstSearch<NamedState>(initialState, goalTest, sf);
 		algo = new DepthLimitedSearch<NamedState>(4, initialState, goalTest, sf);
-		//algo = new AStarSearch<NamedState>(initialState, goalTest, sf, heuristic);
-		
+		// algo = new AStarSearch<NamedState>(initialState, goalTest, sf,
+		// heuristic);
+
 		algo.verboseSearch();
 	}
 }
